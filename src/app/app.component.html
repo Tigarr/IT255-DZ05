@@ -1,0 +1,44 @@
+<div class="glavni-panel "> 
+  <h1>Hotel</h1>
+  <form class="form-unos" name="form" [formGroup]="form"(ngSubmit)="form.valid && onSubmit()">
+   <div class="md-form">
+      <label for="brSobe">Naziv sobe</label>
+      <input type="text" class="form-control" id="brSobe" #brSobe formControlName="brSobeForma"
+      [ngClass]="{'is-invalid': form.get('brSobeForma').touched && form.get('brSobeForma').invalid}"/>
+    <div *ngIf="form.get('brSobeForma').touched && form.get('brSobeForma').invalid" class="invalid-feedback">
+      <div *ngIf="form.get('brSobeForma').errors.required">Naziv je neophodan</div>
+      <div *ngIf="form.get('brSobeForma').errors.minlength">Prekratak treba da sadrzi 6 karaktera</div>
+    </div>
+    </div>
+      <label for="brKreveta">Broj kreveta</label>
+      <input type="number" class="form-control" id="brKreveta" #brKreveta formControlName="brKrevetaForma"
+      [ngClass]="{'is-invalid': form.get('brKrevetaForma').touched && form.get('brKrevetaForma').invalid}">
+    <div class="invalid-feedback">
+      <div>Broj nocenja neophodan</div>
+    </div>
+    
+    
+      <label for="cena">Cena sobe</label>
+      <input type="number" class="form-control" id="cena" #cena formControlName="cenaForma" [ngClass]="{'is-invalid': form.get('cenaForma').touched && form.get('cenaForma').invalid}"/>
+      <div class="invalid-feedback">
+        <div>Cena je neophodna</div>
+      </div>
+      <small id="cena" class="form-text text-muted" >Cena sobe po nocenju</small>
+
+   
+
+    <button type="submit" [disabled]="!form.valid" class="btn btn-success" (click)="dodajSobu(brSobe,brKreveta,cena)">Dodaj sobu</button>
+
+  </form>
+
+  
+  <div>
+    <label>Unesi max cenu sobe: </label>
+    
+    <input [(ngModel)]="price" class="form-control" placeholder="MAXCENA" />
+  </div>
+  
+ <app-soba *ngFor="let soba of sobe | maxcena : price; index as i;"  (roomToDelete)="izbrisiSobu($event)" (updateRoom)="izmeniSobu($event)" [soba]="soba"  ></app-soba> 
+      
+
+</div>
